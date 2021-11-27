@@ -96,7 +96,6 @@ export default {
   },
   mounted() {
     this.getReadList();
-    console.log(`this.readList\n\n\n\n\n\n\\n\n`, this.readList);
   },
 };
 </script>

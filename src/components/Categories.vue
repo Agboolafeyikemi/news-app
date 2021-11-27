@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h2 class="ml-20 mt-20 -mb-10 font-semibold text-xl">Top Stories</h2>
+    <h2 class="ml-20 mt-20 -mb-10 font-semibold text-xl">
+      Top Stories/Headlines
+    </h2>
     <section class="wrapper text-gray-600 body-font">
       <div class="container bg-green-100 px-5 py-24 mx-auto max-w-7x1">
         <div class="flex flex-wrap w-full mb-4 py-2 border-0">

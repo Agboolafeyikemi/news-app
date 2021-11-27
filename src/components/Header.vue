@@ -74,7 +74,6 @@ export default {
   },
   mounted() {
     this.getReadList();
-    console.log(``);
   },
 };
 </script>

@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h1 class="res">Search Result For {{ inputValue }} News</h1>
+    <h1 class="res">
+      Search Result For
+      <span class="text-green-900">{{ inputValue }}</span> News
+    </h1>
     <section class="wrapper text-gray-600 body-font" v-if="searchList">
       <div class="container px-5 py-24 mx-auto max-w-7x1">
         <div class="flex flex-wrap -m-4">
@@ -84,7 +87,6 @@ export default {
       this.loading = true;
       const searcRes = localStorage.getItem("SEARCHLIST");
       const inputV = localStorage.getItem("INPUTVALUE");
-      console.log(`response2\n\n\n\n\n\n\n\n`, searcRes, inputV);
       this.searchList = JSON.parse(searcRes);
       this.inputValue = JSON.parse(inputV);
       this.loading = false;
@@ -101,11 +103,6 @@ export default {
   },
   mounted() {
     this.getSearchList();
-    console.log(
-      `this.readListnowDF\n\n\n\n\n\n\\n\n`,
-      this.searchList[0],
-      this.inputValue
-    );
   },
 };
 </script>
@@ -134,14 +131,11 @@ export default {
   width: 90%;
   position: relative;
   z-index: 1;
-  background: #f8fcff;
+  background: #a6b5c0;
   border-radius: 20px;
   padding: 2% 5%;
-  -moz-box-orient: vertical;
-  -moz-box-direction: normal;
   flex-direction: column;
   max-width: 1280px;
-  background: #e8f6ff;
   margin-top: 5rem;
 }
 </style>

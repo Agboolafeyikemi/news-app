@@ -1,10 +1,8 @@
 <template>
   <div class="home" v-if="location && headlines">
-    <section
-      class="con pb-32 w-full flex justify-center align-center mh-43 pt-0 pr-0 pb-5"
-    >
+    <section class="con pb-32 text-gray-700">
       <div
-        class="title text-white text-center text-white p-8 text-3xl md:text-5xl"
+        class="title text-grey-800 text-center text-white p-8 text-3xl md:text-5xl"
       >
         Trending News in <br />
         {{ location.country.name }}
@@ -30,6 +28,7 @@
                 {{ headlines[0].title | truncate(50, "...") }}
               </h1>
             </div>
+            <p class="text-green-600 my-1">{{ headlines[0].source.name }}</p>
             <div class="flex justify-between space-x-2 mt-2 w-full">
               <div class="flex justify-between">
                 <span>
@@ -60,7 +59,7 @@
               </div>
               <i
                 class="cursor-pointer text-green-400 text-2xl block ml-3 el-icon-circle-plus text-white"
-                @click="addToReadList(news)"
+                @click="addToReadList(headlines[0])"
               ></i>
             </div>
           </div>
@@ -81,6 +80,7 @@
                 {{ headlines[2].title | truncate(50, "...") }}
               </h1>
             </div>
+            <p class="text-green-600 my-1">{{ headlines[2].source.name }}</p>
             <div class="flex justify-between space-x-2 mt-2 w-full">
               <div class="flex justify-between">
                 <span>
@@ -111,7 +111,7 @@
               </div>
               <i
                 class="cursor-pointer text-green-400 text-2xl block ml-3 el-icon-circle-plus text-white"
-                @click="addToReadList(news)"
+                @click="addToReadList(headlines[2])"
               ></i>
             </div>
           </div>
@@ -137,6 +137,7 @@
               <p class="text-sm text-gray-700 px-2 mr-1">
                 {{ headlines[1].description | truncate(500, "...") }}
               </p>
+              <p class="text-green-600 my-1">{{ headlines[1].source.name }}</p>
               <div class="flex items-center justify-between mt-2 mx-6">
                 <a
                   :href="headlines[1].url"
@@ -146,7 +147,7 @@
                 >
                 <i
                   class="cursor-pointer text-green-400 text-2xl block ml-3 el-icon-circle-plus text-white"
-                  @click="addToReadList(news)"
+                  @click="addToReadList(headlines[1])"
                 ></i>
               </div>
               <div class="author flex items-center -ml-3 my-3">
@@ -200,6 +201,7 @@
                 {{ headlines[3].title | truncate(50, "...") }}
               </h1>
             </div>
+            <p class="text-green-700 my-1">{{ headlines[3].source.name }}</p>
             <div class="flex justify-between space-x-2 mt-2 w-full">
               <div class="flex justify-between">
                 <span>
@@ -230,7 +232,7 @@
               </div>
               <i
                 class="cursor-pointer text-green-400 text-2xl block ml-3 el-icon-circle-plus text-white"
-                @click="addToReadList(news)"
+                @click="addToReadList(headlines[3])"
               ></i>
             </div>
           </div>
@@ -248,6 +250,7 @@
                 {{ headlines[4].title | truncate(50, "...") }}
               </h1>
             </div>
+            <p class="text-green-600 my-1">{{ headlines[4].source.name }}</p>
             <div class="flex justify-between space-x-2 mt-2 w-full">
               <div class="flex justify-between">
                 <span>
@@ -278,7 +281,7 @@
               </div>
               <i
                 class="cursor-pointer text-green-400 text-2xl block ml-3 el-icon-circle-plus text-white"
-                @click="addToReadList(news)"
+                @click="addToReadList(headlines[4])"
               ></i>
             </div>
           </div>
@@ -307,6 +310,7 @@ export default {
       location: "",
       loading: false,
       headlines: "",
+      readList: [],
     };
   },
   methods: {
@@ -320,12 +324,16 @@ export default {
           response.data.country.iso_code
         );
         this.headlines = data.data.articles.slice(0, 5);
-        console.log(`headlines`, this.headlines);
         this.loading = false;
       } else {
-        console.log("error");
         this.loading = false;
       }
+    },
+    async getReadList() {
+      this.loading = true;
+      const response = localStorage.getItem("READLIST");
+      this.readList = JSON.parse(response);
+      this.loading = false;
     },
     addToReadList(news) {
       localStorageHelper.storeNews(news);
@@ -339,7 +347,6 @@ export default {
   },
   mounted() {
     this.getLocation();
-    console.log(`headlines\n\n\n\n\n\n\n`, this.headlines);
   },
 };
 </script>
