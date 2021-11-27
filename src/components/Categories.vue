@@ -69,7 +69,7 @@
                     </span>
 
                     <h3 class="text-lg text-gray-600 font-semibold mb-2 ml-2">
-                      Nigeria
+                      {{ location.country.name }}
                     </h3>
                   </div>
                   <i
@@ -126,9 +126,25 @@ export default {
       newsCategories: "",
       loading: false,
       category: "",
+      location: "",
     };
   },
   methods: {
+    async getLocation() {
+      this.loading = true;
+      const response = await api.getUserLocation();
+      if (response) {
+        this.location = response.data;
+        localStorage.setItem("country_ISO", response.data.country.iso_code);
+        const data = await api.getTopNewsHealines(
+          response.data.country.iso_code
+        );
+        this.headlines = data.data.articles.slice(0, 7);
+        this.loading = false;
+      } else {
+        this.loading = false;
+      }
+    },
     async getCategories(category) {
       this.loading = true;
       let iso = localStorage.getItem("country_ISO");
@@ -149,6 +165,7 @@ export default {
     },
   },
   mounted() {
+    this.getUserLocation();
     this.getCategories("business");
   },
 };
