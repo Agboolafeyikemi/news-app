@@ -165,7 +165,7 @@ export default {
     },
   },
   mounted() {
-    this.getUserLocation();
+    this.getLocation();
     this.getCategories("business");
   },
 };

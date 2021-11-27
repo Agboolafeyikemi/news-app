@@ -139,7 +139,7 @@ export default {
     },
   },
   async mounted() {
-    this.getUserLocation();
+    this.getLocation();
     this.getCategories("techcrunch");
     const response = await api.getAllSources();
     this.sources = response.data.sources;
