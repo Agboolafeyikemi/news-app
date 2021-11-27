@@ -32,7 +32,7 @@
 
       <a class="anchor bg-green-800 text-white-400" href="/read-list">
         <span class="text-white">Saved News</span
-        ><span class="number">{{ readList.length }}</span></a
+        ><span class="number">{{ readList.length && readList.length }}</span></a
       >
     </div>
   </div>
