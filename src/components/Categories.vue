@@ -10,7 +10,7 @@
             <el-select
               v-model="category"
               @change="getCategories"
-              placeholder="Select By Category"
+              placeholder="Select News By Category"
             >
               <el-option
                 v-for="item of categories"
@@ -171,13 +171,11 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .wrapper {
   width: 100vw;
   display: flex;
-  -moz-box-pack: center;
   justify-content: center;
-  -moz-box-align: center;
   align-items: center;
   min-height: 43rem;
   padding: 0 0 5%;
@@ -187,14 +185,10 @@ export default {
   width: 90%;
   position: relative;
   z-index: 1;
-  /* background: #f8fcff; */
   border-radius: 20px;
   padding: 2% 5%;
-  -moz-box-orient: vertical;
-  -moz-box-direction: normal;
   flex-direction: column;
   max-width: 1280px;
-  /* background: #e8f6ff; */
   margin-top: 5rem;
 }
 </style>
