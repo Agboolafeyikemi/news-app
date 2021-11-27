@@ -1,27 +1,10 @@
 <template>
   <section class="wrapper text-gray-600 body-font">
     <div class="container px-5 py-24 mx-auto max-w-7x1">
-      <div class="flex flex-wrap w-full mb-4 py-2 border-0">
-        <div>
-          <el-select
-            v-model="category"
-            @change="getCategories"
-            placeholder="Select By Category"
-          >
-            <el-option
-              v-for="item of categories"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            >
-            </el-option>
-          </el-select>
-        </div>
-      </div>
       <div class="flex flex-wrap -m-4" v-loading="loading">
         <div
           class="xl:w-1/3 md:w-1/2 p-4"
-          v-for="news in newsCategories"
+          v-for="news in readList"
           :key="news.title"
         >
           <div class="bg-white p-6 rounded-lg">
@@ -85,70 +68,37 @@
 </template>
 
 <script>
-import api from "../api";
 import localStorageHelper from "../helpers/local";
-
 export default {
-  name: "categories",
   data() {
     return {
-      categories: [
-        {
-          name: "Business",
-          id: "Business",
-        },
-        {
-          name: "Entertainment",
-          id: "Entertainment",
-        },
-        {
-          name: "General",
-          id: "General",
-        },
-        {
-          name: "Health",
-          id: "Health",
-        },
-        {
-          name: "Science",
-          id: "Science",
-        },
-        {
-          name: "Sports",
-          id: "Sports",
-        },
-      ],
-      newsCategories: "",
+      readList: "",
       loading: false,
-      category: "",
     };
   },
   methods: {
-    async getCategories(category) {
+    async getReadList() {
       this.loading = true;
-      let iso = localStorage.getItem("country_ISO");
-      const data = await api.getTopNewsHeadingCategories(iso, category);
-      if (data) {
-        this.newsCategories = data.data.articles.slice(0, 5);
-        this.loading = false;
-      }
+      const response = localStorage.getItem("READLIST");
+      this.readList = JSON.parse(response);
+      this.loading = false;
     },
     addToReadList(news) {
-      localStorageHelper.storeNews(news);
+      localStorageHelper.deleteOrders(news);
+      this.getReadList();
       this.$notify({
         title: "Success",
-        message: "Added to your read list",
+        message: "Remove to your read list",
         type: "success",
-        position: "bottom-left",
       });
     },
   },
   mounted() {
-    this.getCategories("business");
+    this.getReadList();
+    console.log(`this.readList\n\n\n\n\n\n\\n\n`, this.readList);
   },
 };
 </script>
-
 <style scoped>
 .wrapper {
   width: 100vw;

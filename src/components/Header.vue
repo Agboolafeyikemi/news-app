@@ -15,52 +15,71 @@
           </div>
         </a>
       </div>
-      <nav class="hidden md:block">
-        <ul class="flex items-center justify-between">
-          <li class="ml-10">
-            <a href="/" class="text-base font-bold">Home</a>
-          </li>
-          <li class="ml-10">
-            <a href="/read-news" class="text-base font-bold">Read News</a>
-          </li>
-        </ul>
-      </nav>
-
-      <a
-        href="/search"
-        class="hidden md:block flex items-center text-base font-bold hover:text-green-400"
-      >
-        <span class="hover:text-green-400">Search</span>
-        <i class="ml-3 text-base font-bold el-icon-search"></i>
-      </a>
-
-      <!-- Navigation Menu -->
-      <div class="block md:hidden">
-        <el-dropdown>
-          <el-button type="primary" style="padding: 0px">
-            <i class="text-4xl el-icon-s-fold el-icon--right"></i>
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
-              <a href="/">Home</a>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <a href="/read-news">Read News</a>
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+      <div class="flex w-3/6">
+        <el-input
+          class="md:w-3/6 search_input"
+          placeholder="Search News By Category"
+          v-model="input"
+        ></el-input>
+        <el-button
+          v-loading="loading"
+          class="-ml-40 md:w-1/6 z-50"
+          @click="searchEntry"
+          type="primary"
+          >Search</el-button
+        >
       </div>
+
+      <a class="anchor bg-blue-800 text-white-400" href="/read-list">
+        <span class="text-white">Saved News</span
+        ><span class="number">{{ readList.length }}</span></a
+      >
     </div>
   </div>
 </template>
 
 <script>
+import api from "../api";
+import localStorageHelper from "../helpers/local";
 export default {
   components: {},
+  data() {
+    return {
+      readList: [],
+      loading: false,
+      input: "",
+    };
+  },
+  methods: {
+    async getReadList() {
+      this.loading = true;
+      const response = localStorage.getItem("READLIST");
+      this.readList = JSON.parse(response);
+      this.loading = false;
+    },
+    async searchEntry() {
+      this.loading = true;
+      if (this.input) {
+        const response = await api.searchAllCategories(this.input);
+        this.loading = false;
+        this.searchResults = response.data.articles.slice(0, 5);
+        localStorageHelper.storeSearchResults(this.searchResults);
+        localStorageHelper.storeInputValue(this.input);
+        this.loading = false;
+        this.$router.push("/search-list");
+      } else {
+        this.loading = false;
+      }
+    },
+  },
+  mounted() {
+    this.getReadList();
+    console.log(``);
+  },
 };
 </script>
 
-<style>
+<style scoped>
 /* since nested groupes are not supported we have to use
      regular css for the nested dropdowns
   */
@@ -88,5 +107,22 @@ li:hover > button svg {
 }
 .min-w-32 {
   min-width: 8rem;
+}
+.anchor {
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: 5px;
+}
+.number {
+  background-color: #fff;
+  border-radius: 0.125rem;
+  color: #000;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  padding: 0.1875rem 0.375rem;
+}
+.el-button {
+  margin-left: -43px;
 }
 </style>

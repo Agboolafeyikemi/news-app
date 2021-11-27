@@ -2,7 +2,7 @@ import axios from "axios";
 
 const locationUrl = "https://api.geoapify.com/v1";
 const newsApiUrl = "https://newsapi.org/v2";
-const apiKey = "5fd8d53a75de44b4be979e300ffcf191";
+const apiKey = "e3eec7fc684441bcb2c2b6679a5d2ada";
 
 async function getUserLocation() {
   const response = await axios.get(

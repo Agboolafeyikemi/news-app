@@ -10,24 +10,16 @@ const routes = [
     name: "Home",
     component: Home,
   },
-  // {
-  //     path: "/about",
-  //     name: "About",
-  //     component: () =>
-  //         import ("../views/About.vue"),
-  // },
-  // {
-  //     path: "/search",
-  //     name: "Search",
-  //     component: () =>
-  //         import ("../views/Search.vue"),
-  // },
-  // {
-  //     path: "/read-list",
-  //     name: "ReadList",
-  //     component: () =>
-  //         import ("../views/ReadList.vue"),
-  // },
+  {
+    path: "/read-list",
+    name: "ReadList",
+    component: () => import("../views/ReadList.vue"),
+  },
+  {
+    path: "/search-list",
+    name: "SearchResult",
+    component: () => import("../views/SearchResult.vue"),
+  },
 ];
 
 const router = new VueRouter({

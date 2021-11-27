@@ -1,19 +1,20 @@
 <template>
   <div class="home" v-loading="loading" v-if="location">
-    <CategoriesNew></CategoriesNew>
-    <!-- <MoreNews></MoreNews> -->
+    <CategoriesNews></CategoriesNews>
+    <MoreNews></MoreNews>
   </div>
 </template>
 
 <script>
 import api from "../api";
-import CategoriesNew from "../components/Categories.vue";
-// import MoreNews from "../components/MoreNews.vue";
+import CategoriesNews from "../components/Categories.vue";
+import MoreNews from "../components/MoreNews.vue";
+
 export default {
   name: "Home",
   components: {
-    CategoriesNew,
-    // MoreNews,
+    CategoriesNews,
+    MoreNews,
   },
   data() {
     return {

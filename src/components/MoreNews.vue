@@ -4,12 +4,12 @@
       <div class="flex flex-wrap w-full mb-4 py-2 border-0">
         <div>
           <el-select
-            v-model="category"
+            v-model="source_news"
             @change="getCategories"
-            placeholder="Select By Category"
+            placeholder="Select News Source"
           >
             <el-option
-              v-for="item of categories"
+              v-for="item in sources"
               :key="item.id"
               :label="item.name"
               :value="item.id"
@@ -87,49 +87,25 @@
 <script>
 import api from "../api";
 import localStorageHelper from "../helpers/local";
-
 export default {
-  name: "categories",
+  name: "quick-headline",
   data() {
     return {
-      categories: [
-        {
-          name: "Business",
-          id: "Business",
-        },
-        {
-          name: "Entertainment",
-          id: "Entertainment",
-        },
-        {
-          name: "General",
-          id: "General",
-        },
-        {
-          name: "Health",
-          id: "Health",
-        },
-        {
-          name: "Science",
-          id: "Science",
-        },
-        {
-          name: "Sports",
-          id: "Sports",
-        },
-      ],
       newsCategories: "",
       loading: false,
-      category: "",
+      source_news: "",
+      sources: [],
     };
   },
   methods: {
-    async getCategories(category) {
+    async getCategories(source) {
+      let params = source ? source : this.source_news;
       this.loading = true;
-      let iso = localStorage.getItem("country_ISO");
-      const data = await api.getTopNewsHeadingCategories(iso, category);
+      const data = await api.filterNewsBySource(params);
       if (data) {
         this.newsCategories = data.data.articles.slice(0, 5);
+        this.loading = false;
+      } else {
         this.loading = false;
       }
     },
@@ -143,8 +119,10 @@ export default {
       });
     },
   },
-  mounted() {
-    this.getCategories("business");
+  async mounted() {
+    this.getCategories("techcrunch");
+    const response = await api.getAllSources();
+    this.sources = response.data.sources;
   },
 };
 </script>
@@ -172,7 +150,7 @@ export default {
   -moz-box-direction: normal;
   flex-direction: column;
   max-width: 1280px;
-  background: #e8f6ff;
+  background: #a6b5c0;
   margin-top: 5rem;
 }
 </style>
