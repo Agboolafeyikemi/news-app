@@ -4,7 +4,7 @@
       <div>
         <a href="/" class="flex items-center">
           <img
-            src="../assets/logo.svg"
+            src="../assets/logo.jpeg"
             alt="news-logo"
             height="56"
             width="56"
@@ -23,14 +23,14 @@
         ></el-input>
         <el-button
           v-loading="loading"
-          class="-ml-40 md:w-1/6 z-50"
+          class="bg-green-100 -ml-40 md:w-1/6 z-50"
           @click="searchEntry"
           type="primary"
           >Search</el-button
         >
       </div>
 
-      <a class="anchor bg-blue-800 text-white-400" href="/read-list">
+      <a class="anchor bg-green-800 text-white-400" href="/read-list">
         <span class="text-white">Saved News</span
         ><span class="number">{{ readList.length }}</span></a
       >
@@ -124,5 +124,8 @@ li:hover > button svg {
 }
 .el-button {
   margin-left: -43px;
+  background-color: #064e3b;
+  border: none;
+  color: #fff;
 }
 </style>
