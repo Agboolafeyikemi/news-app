@@ -69,7 +69,7 @@
                     </span>
 
                     <h3 class="text-lg text-gray-600 font-semibold mb-2 ml-2">
-                      {{ location.country.name }}
+                      {{ location }}
                     </h3>
                   </div>
                   <i
@@ -136,7 +136,7 @@ export default {
       if (response) {
         this.location = response.data;
         localStorage.setItem("country_ISO", response.data.country.iso_code);
-        const data = await api.getTopNewsHealines(
+        const data = await api.getTopNewsHeading(
           response.data.country.iso_code
         );
         this.headlines = data.data.articles.slice(0, 7);
@@ -165,8 +165,8 @@ export default {
     },
   },
   mounted() {
-    this.getLocation();
     this.getCategories("business");
+    this.location = localStorage.getItem("country");
   },
 };
 </script>

@@ -319,6 +319,7 @@ export default {
       const response = await api.getUserLocation();
       if (response) {
         this.location = response.data;
+        localStorage.setItem("country", response.data.country.name);
         localStorage.setItem("country_ISO", response.data.country.iso_code);
         const data = await api.getTopNewsHeading(
           response.data.country.iso_code

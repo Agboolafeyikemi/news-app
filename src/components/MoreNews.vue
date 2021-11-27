@@ -67,7 +67,7 @@
                     </span>
 
                     <h3 class="text-lg text-gray-600 font-semibold mb-2 ml-2">
-                      {{ location.country.name }}
+                      {{ location }}
                     </h3>
                   </div>
                   <i
@@ -91,7 +91,7 @@
 import api from "../api";
 import localStorageHelper from "../helpers/local";
 export default {
-  name: "quick-headline",
+  name: "morenews",
   data() {
     return {
       newsCategories: "",
@@ -102,21 +102,6 @@ export default {
     };
   },
   methods: {
-    async getLocation() {
-      this.loading = true;
-      const response = await api.getUserLocation();
-      if (response) {
-        this.location = response.data;
-        localStorage.setItem("country_ISO", response.data.country.iso_code);
-        const data = await api.getTopNewsHealines(
-          response.data.country.iso_code
-        );
-        this.headlines = data.data.articles.slice(0, 7);
-        this.loading = false;
-      } else {
-        this.loading = false;
-      }
-    },
     async getCategories(source) {
       let params = source ? source : this.source_news;
       this.loading = true;
@@ -139,10 +124,10 @@ export default {
     },
   },
   async mounted() {
-    this.getLocation();
     this.getCategories("techcrunch");
     const response = await api.getAllSources();
     this.sources = response.data.sources;
+    this.location = localStorage.getItem("country");
   },
 };
 </script>

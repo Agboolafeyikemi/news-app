@@ -53,7 +53,7 @@
                     </span>
 
                     <h3 class="text-lg text-gray-600 font-semibold mb-2 ml-2">
-                      {{ location.country.name }}
+                      {{ location }}
                     </h3>
                   </div>
                   <i
@@ -74,32 +74,17 @@
 </template>
 <script>
 import localStorageHelper from "../helpers/local";
-import api from "../api";
+
 export default {
   data() {
     return {
       searchList: "",
       loading: false,
       inputValue: "",
-      location,
+      location: "",
     };
   },
   methods: {
-    async getLocation() {
-      this.loading = true;
-      const response = await api.getUserLocation();
-      if (response) {
-        this.location = response.data;
-        localStorage.setItem("country_ISO", response.data.country.iso_code);
-        const data = await api.getTopNewsHealines(
-          response.data.country.iso_code
-        );
-        this.headlines = data.data.articles.slice(0, 7);
-        this.loading = false;
-      } else {
-        this.loading = false;
-      }
-    },
     async getSearchList() {
       this.loading = true;
       const searcRes = localStorage.getItem("SEARCHLIST");
@@ -120,7 +105,7 @@ export default {
   },
   mounted() {
     this.getSearchList();
-    this.getLocation();
+    this.location = localStorage.getItem("country");
   },
 };
 </script>

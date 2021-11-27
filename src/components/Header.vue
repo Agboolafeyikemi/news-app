@@ -9,7 +9,6 @@
             height="56"
             width="56"
           />
-          <!-- <Logo /> -->
           <div class="ml-2">
             <span class="text-green-600 leading-none">NEWS</span>
           </div>
